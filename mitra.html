@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#f8e9d2">
+<link rel="icon" href="ikon-512.png">
+  <title>Mitra — Teh Tarik Nusantara</title>
+
+  <!-- Font & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    :root{
+      --cream: #fdf7e7;
+      --accent: #b3874f;
+      --accent-dark: #8c6231;
+      --card-bg: rgba(255,255,255,0.95);
+      --text: #4b3b2a;
+      --muted: #7b6a58;
+      --form-bg: #f5f3f0;
+    }
+    *{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:'Fredoka',sans-serif;background:linear-gradient(135deg,var(--cream),#f8e9d2);color:var(--text);line-height:1.5;
+        -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+    }
+    a{text-decoration:none;color:inherit;}
+    h1,h2,h3{font-weight:600;}
+    img{display:block;width:100%;height:100%;object-fit:cover;border-radius:10px;}
+
+    /* Navbar */
+    nav.topbar{
+      position:fixed;top:0;left:0;right:0;
+      background:var(--accent-dark);
+      color:white;
+      height:70px;
+      display:flex;justify-content:center;align-items:center;gap:12px;
+      box-shadow:0 6px 14px rgba(0,0,0,0.15);
+      z-index:1000;
+    }
+    nav.topbar img{width:46px;height:46px;}
+    nav.topbar .title{font-weight:700;font-size:1.3rem;}
+
+    /* Page wrapper for zoom transition */
+    #page{
+      transform:scale(0.95);
+      opacity:0;
+      transition:transform .4s ease, opacity .4s ease;
+    }
+
+    main{padding:100px 20px 20px;max-width:1100px;margin:0 auto;}
+    section{margin-bottom:40px;opacity:0;transform:translateY(28px);transition:all .6s ease;}
+    section.show{opacity:1;transform:translateY(0);}
+    section h2{text-align:center;margin-bottom:18px;color:var(--accent-dark);font-size:1.6rem;}
+
+    /* Cards */
+    .card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;}
+    .card{background:var(--card-bg);border-radius:14px;overflow:hidden;box-shadow:0 6px 20px rgba(0,0,0,0.1);transition:.4s ease, transform .3s ease;}
+    .card:hover{transform:translateY(-4px) scale(1.03);}
+    .card .photo{width:100%;aspect-ratio:1/1;background:#ccc;}
+    .card .content{padding:14px 16px;}
+    .card h3{color:var(--accent-dark);margin-bottom:8px;font-size:1.05rem;}
+    .card p{color:var(--muted);font-size:.95rem;}
+
+    .h-scroll{display:flex;gap:14px;overflow-x:auto;padding:10px;scroll-behavior:smooth;}
+    .h-scroll::-webkit-scrollbar{height:8px;}
+    .h-scroll::-webkit-scrollbar-thumb{background:rgba(140,98,49,0.3);border-radius:8px;}
+    .h-card{min-width:220px;max-width:220px;flex:0 0 auto;transition:transform .3s ease;}
+    .h-card:hover{transform:scale(1.05);}
+    .h-card .photo{aspect-ratio:1/1;}
+
+    .btn-small{display:inline-block;padding:10px 16px;border-radius:10px;background:var(--accent);color:white;font-weight:700;margin-top:10px;cursor:pointer;transition:.2s;}
+    .btn-small:hover{transform:translateY(-3px) scale(1.05);}
+
+    /* Form */
+    .form-wrapper{background:var(--form-bg);padding:18px;border-radius:12px;margin-top:12px;}
+    .form-wrapper input, .form-wrapper select, .form-wrapper textarea{
+      width:100%;padding:8px 10px;margin-bottom:10px;border-radius:6px;border:1px solid #ccc;background:#eee;color:#555;
+    }
+    .form-wrapper textarea{resize:none;height:60px;}
+
+    footer{background:linear-gradient(180deg,var(--accent),var(--accent-dark));color:white;padding:18px;border-radius:10px;text-align:center;margin-top:20px;}
+
+    /* Mini menu toggle */
+    .fab-wrap{position:fixed;right:18px;bottom:18px;z-index:1100;display:flex;flex-direction:column;align-items:center;gap:10px}
+    .fab{width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:white;box-shadow:0 8px 20px rgba(0,0,0,0.15);border:none;cursor:pointer;transition:.3s;}
+    .fab:hover{transform:translateY(-3px);}
+    .fab i{font-size:22px;color:var(--accent-dark);}
+    .mini-menu{position:fixed;right:18px;bottom:86px;display:flex;flex-direction:column;align-items:center;gap:10px;z-index:1099;pointer-events:none;}
+    .mini-item{display:flex;align-items:center;gap:8px;background:white;padding:8px 12px;border-radius:10px;box-shadow:0 8px 20px rgba(0,0,0,0.1);transform:translateX(20px);opacity:0;transition:all .4s ease;pointer-events:auto;}
+    .mini-item.show{transform:translateX(0);opacity:1;}
+    .mini-item i{color:var(--accent-dark);}
+    .mini-item a{color:var(--text);font-weight:600;text-decoration:none;}
+
+    @media (max-width:520px){
+      .h-card{min-width:160px;max-width:160px;}
+    }
+  </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="topbar">
+  <img src="LogoTTN.png" alt="Logo Teh Tarik Nusantara">
+  <div class="title">Teh Tarik Nusantara</div>
+</nav>
+
+<div id="page">
+<main>
+
+  <!-- Konten A: Judul + Foto -->
+  <section id="kontenA">
+    <h2>Mau Bermitra?</h2>
+    <h3 style="text-align:center;max-width:700px;margin:0 auto;">Saatnya tumbuh bersama Teh Tarik Nusantara — peluang besar untuk wirausaha lokal yang siap berkembang.</h3>
+    <div style="margin-top:12px;">
+      <img src="Pelatihan.jpg" alt="Bermitra" style="max-width:100%;border-radius:12px;">
+      </div>
+  </section>
+
+  <!-- Konten B: Card 6 foto vertical -->
+  <section id="kontenB">
+    <h2>Lihat Mitra Sukses Kami</h2>
+    <div class="h-scroll">
+      <div class="h-card card"><div class="photo" style="background:url('Tim1.jpg') center/cover no-repeat;"></div><div class="content"><h3>Mitra Karawang</h3></div></div>
+          <div class="h-card card"><div class="photo" style="background:url('crb.jpg') center/cover no-repeat;"></div><div class="content"><h3>Mitra Cirebon</h3></div></div>
+          <div class="h-card card"><div class="photo" style="background:url('sbg.jpg') center/cover no-repeat;"></div><div class="content"><h3>Mitra Subang</h3></div></div>
+          <div class="h-card card"><div class="photo" style="background:url('brb.jpg') center/cover no-repeat;"></div><div class="content"><h3>Mitra Brebes</h3></div></div>
+          <div class="h-card card"><div class="photo" style="background:url('hgl.jpg') center/cover no-repeat;"></div><div class="content"><h3>Mitra Haurgeulis</h3></div></div>
+    </div>
+  </section>
+
+  <!-- Konten C: Teks biasa -->
+  <section id="kontenC">
+    <h2>🌱 Bersama Tumbuh dan Berdaya</h2>
+    <p style="text-align:center;max-width:700px;margin:0 auto;">Kami percaya bahwa keberhasilan bukan hanya tentang produk yang unggul, tetapi juga tentang kemitraan yang kuat dan saling menguntungkan.
+    <br>Melalui kolaborasi bersama para mitra, Teh Tarik Nusantara berkomitmen untuk terus berkembang, menghadirkan peluang usaha yang berkelanjutan, serta memperluas jangkauan cita rasa autentik ke seluruh Nusantara.
+    <br>Mari melangkah bersama menuju masa depan yang penuh semangat, inovasi, dan kesuksesan bersama.</p>
+  </section>
+
+  <!-- Konten D: Card + Form -->
+  <section id="kontenD">
+    <h2>Cara Bergabung</h2>
+    <div class="card" style="padding:14px 16px;">
+      <p>Ikuti langkah berikut:</p>
+      <button class="btn-small" id="showFormBtn">Cara Bergabung</button>
+      <div class="form-wrapper" id="formWrapper" style="display:none;">
+        <input type="text" value="Nama Contoh" readonly>
+        <input type="email" value="email@contoh.com" readonly>
+        <select readonly><option>Mitra</option></select>
+        <input type="text" value="Lainnya" readonly>
+        <input type="text" value="Kabupaten Contoh" readonly>
+        <input type="text" value="Kecamatan Contoh" readonly>
+        <textarea readonly><textarea readonly>Pesan contoh</textarea>
+        <p>Kamu tinggal klik kirim</p>
+        <a href="kontak.html" class="btn-small">Isi Formulir</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- Footer -->
+<footer>
+  <p>Jl. By Pass Ujungaris No. 56, Ujingaris - Widasari<br>Teh Tarik Nusantara — Rasa Tiada Tara<br>© 2026 Teh Tarik Nusantara. All rights reserved.</p>
+</footer>
+</div> <!-- end #page -->
+
+<!-- Mini menu toggle -->
+<div class="fab-wrap">
+  <button class="fab" id="menuBtn" title="Menu"><i class="fas fa-bars"></i></button>
+  <div class="mini-menu" id="miniMenu">
+    <div class="mini-item"><i class="fas fa-home"></i><a href="index.html">Beranda</a></div>
+    <div class="mini-item"><i class="fas fa-info-circle"></i><a href="about.html">Tentang</a></div>
+    <div class="mini-item"><i class="fas fa-handshake"></i><a href="mitra.html">Mitra</a></div>
+    <div class="mini-item"><i class="fas fa-envelope"></i><a href="kontak.html">Kontak</a></div>
+  </div>
+</div>
+
+<script>
+  // Zoom-in page load
+  const page = document.getElementById('page');
+  window.addEventListener('load', () => {
+    page.style.transform = 'scale(1)';
+    page.style.opacity = '1';
+  });
+
+  // Fade-in sections & cards
+  const sections = document.querySelectorAll('section');
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        const cards = entry.target.querySelectorAll('.card, .h-card');
+        cards.forEach((c,i)=>setTimeout(()=>c.classList.add('show'), i*120));
+        entry.target.classList.add('show');
+      }
+    });
+  }, {threshold:0.15});
+  sections.forEach(s => io.observe(s));
+
+  // Mini menu toggle
+  const menuBtn = document.getElementById('menuBtn');
+  const miniMenu = document.getElementById('miniMenu');
+  let open = false;
+  menuBtn.addEventListener('click', () => {
+    open = !open;
+    miniMenu.querySelectorAll('.mini-item').forEach((it,i) => {
+      setTimeout(() => it.classList.toggle('show', open), i*80);
+    });
+  });
+
+  // Tampilkan form di Konten D
+  const showFormBtn = document.getElementById('showFormBtn');
+  const formWrapper = document.getElementById('formWrapper');
+  showFormBtn.addEventListener('click', () => {
+    formWrapper.style.display = formWrapper.style.display === 'none' ? 'block' : 'none';
+  });
+
+  // Zoom-out saat pindah halaman
+  document.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', e => {
+      const href = link.getAttribute('href');
+      if(href && !href.startsWith('#')){
+        e.preventDefault();
+        page.style.transform = 'scale(0.95)';
+        page.style.opacity = '0';
+        setTimeout(() => { window.location.href = href; }, 400);
+      }
+    });
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#f8e9d2">
+<link rel="icon" href="ikon-512.png">
+  <title>Teh Tarik Nusantara — Rasa Tiada Tara</title>
+
+  <!-- Font & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+ :root{
+  --cream-1:#fdf7e7;
+  --cream-2:#f8e9d2;
+  --accent:#b3874f;
+  --accent-dark:#8c6231;
+  --text:#4b3b2a;
+  --muted:#7b6a58;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+
+body{
+  font-family:'Fredoka',sans-serif;
+  background:#fdf7e7;
+  color:var(--text);
+  line-height:1.5;
+  overflow-x:hidden;
+  user-select:none;
+  -webkit-tap-highlight-color:transparent;
+}
+
+img{max-width:100%;display:block;border-radius:12px;aspect-ratio:1/1;object-fit:cover;}
+a{text-decoration:none;color:inherit}
+
+    /* NAVBAR */
+nav{
+  position:fixed;top:0;left:0;right:0;
+  background:var(--accent-dark);
+  color:#fff;
+  height:64px;
+  display:flex;justify-content:center;align-items:center;gap:10px;
+  box-shadow:0 2px 6px rgba(0,0,0,.15);
+  z-index:1000;
+}
+nav img{width:42px;height:42px;}
+nav .title{font-weight:700;font-size:1.1rem;}
+
+    /* PAGE WRAPPER UNTUK TRANSISI */
+    #page{
+      transform-origin:center center;
+      transition:transform .5s ease, opacity .5s ease;
+    }
+
+    /* HERO */
+header.hero{
+  padding-top:80px;
+  text-align:center;
+}
+ .hero-card{
+  background:#fff;
+  border-radius:16px;
+  overflow:hidden;
+  margin:0 12px;
+  box-shadow:0 4px 10px rgba(0,0,0,.08);
+  animation:fadein 1s ease;
+  }
+.hero-media{
+  height:320px;
+  background:url('foto.jpg') center/cover no-repeat;
+}
+.hero-content{padding:16px;}
+.hero h1{color:var(--accent-dark);font-size:1.8rem;}
+.hero .tag{color:var(--muted);font-size:.95rem;}
+.hero p{margin:8px 0 16px;font-size:.95rem;}
+.hero a.cta{
+  background:var(--accent);
+  color:#fff;
+  padding:10px 18px;
+  border-radius:8px;
+  font-weight:700;
+}
+
+/* MAIN */
+main{padding:18px;max-width:1000px;margin:auto;}
+section{margin-top:32px;}
+section h2{text-align:center;margin-bottom:14px;color:var(--accent-dark);}
+
+/* CARD */
+.card{
+  background:#fff;
+  border-radius:12px;
+  overflow:hidden;
+  box-shadow:0 3px 8px rgba(0,0,0,.06);
+}
+.card .photo{background:url('foto.jpg') center/cover no-repeat;aspect-ratio:1/1;}
+.card .content{padding:12px;}
+.card h3{color:var(--accent-dark);margin-bottom:6px;}
+.card p{color:var(--muted);font-size:.92rem;}
+
+.card-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:14px;
+}
+
+/* HORIZONTAL SCROLL */
+.h-scroll{
+  display:flex;
+  gap:12px;
+  overflow-x:auto;
+  padding:8px;
+}
+.h-scroll::-webkit-scrollbar{height:6px;}
+.h-scroll::-webkit-scrollbar-thumb{background:#c7a878;border-radius:6px;}
+.h-card{min-width:200px;flex:0 0 auto;}
+
+/* SOSMED */
+.socials{
+  display:flex;
+  gap:12px;
+  justify-content:center;
+  margin-top:12px;
+}
+.socials a{
+  width:40px;height:40px;
+  border-radius:50%;
+  background:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 3px 8px rgba(0,0,0,.06);
+}
+.ig{color:#E1306C;}
+.fb{color:#1877F2;}
+.tt{color:#000;}
+
+/* FOOTER */
+/* FLOATING BUTTON */
+.fab-wrap{
+  position:fixed;
+  bottom:16px;
+  right:16px;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  z-index:1100;
+}
+.fab{
+  width:52px;height:52px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#fff;
+  box-shadow:0 4px 10px rgba(0,0,0,.12);
+  border:none;
+}
+.fab i{font-size:20px;color:var(--accent-dark);}
+.fab.menu{color:var(--accent-dark);}
+
+.mini-menu{position:fixed;right:86px;bottom:18px;display:flex;flex-direction:column;gap:10px;z-index:1099;}
+.mini-item{
+      display:flex;align-items:center;gap:8px;
+      background:white;padding:8px 12px;border-radius:10px;
+      box-shadow:0 8px 20px rgba(0,0,0,0.1);
+      transform:translateX(20px);opacity:0;transition:all .4s ease;
+    }
+    .mini-item.show{transform:translateX(0);opacity:1;}
+    .mini-item i{color:var(--accent-dark);}
+
+    @keyframes fadein{from{opacity:0;transform:translateY(30px);}to{opacity:1;transform:translateY(0);}}
+
+    @media(max-width:520px){
+      .hero-media{height:260px;}
+      .h-card{min-width:180px;max-width:180px;}
+    }
+    footer{
+  margin:30px auto 10px;
+  background:var(--accent-dark);
+  color:white;
+  text-align:center;
+  padding:14px;
+  border-radius:10px;
+  font-size:.85rem;
+}
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR TETAP -->
+  <nav>
+    <img src="LogoTTN.png" alt="Logo Teh Tarik Nusantara">
+    <div class="title">Teh Tarik Nusantara</div>
+  </nav>
+
+  <!-- PAGE WRAPPER UNTUK TRANSISI -->
+  <div id="page">
+
+    <!-- HERO -->
+    <header class="hero">
+      <div class="hero-card" >
+        <div class="hero-media" style="background:url('Banner.jpg') center/cover no-repeat;"></div>
+        <div class="hero-content">
+          <h1>Teh Tarik Nusantara</h1>
+          <p>Hadirkan cita rasa teh tarik autentik, creamy, dan khas Nusantara. Produk siap saji berkualitas yang disukai semua kalangan.</p>
+          <a class="cta">Scroll ke bawah</a>
+        </div>
+      </div>
+    </header>
+
+    <main>
+
+      <!-- PRODUK -->
+      <section id="produk">
+        <h2>Produk Unggulan</h2>
+        <div class="card-grid">
+          <div class="card">
+            <div class="photo" style="background:url('bb.jpg') center/cover no-repeat;"></div>
+            <div class="content">
+              <h3>Valencia 350ml</h3>
+              <p>Gaya modern, rasa tetap otentik! Botol Valencia hadir buat kamu yang suka teh tarik segar dengan kemasan elegan dan praktis dibawa ke mana aja. Nikmatin sensasi creamy-nya kapan pun kamu mau!</p>
+            </div>
+          </div>
+          <div class="card">
+            <div class="photo" style="background:url('bk.jpg') center/cover no-repeat;"></div>
+            <div class="content">
+              <h3>Almond 250ml</h3>
+              <p>Kecil-kecil tapi nagih! Botol Almond 250 ml siap nemenin aktivitas harianmu dengan rasa teh tarik manis lembut yang pas banget di lidah. Satu teguk langsung bikin semangat balik lagi!</p>
+            </div>
+          </div>
+          <div class="card">
+            <div class="photo" style="background:url('cb.jpg') center/cover no-repeat;"></div>
+            <div class="content">
+              <h3>Cup 350ml</h3>
+              <p>Langsung minum, langsung happy! Cup 350 ml cocok buat kamu yang pengen teh tarik enak tanpa ribet. Rasanya creamy, segar, dan selalu bikin pengen nambah!</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- MITRA -->
+      <section id="mitra">
+        <h2>Mitra Kami</h2>
+        <div class="h-scroll">
+          <div class="h-card card"><div class="photo" style="background:url('Tim1.jpg') center/cover no-repeat;"></div><div class="content"><h3>Mitra Karawang</h3></div></div>
+          <div class="h-card card"><div class="photo" style="background:url('crb.jpg') center/cover no-repeat;"></div><div class="content"><h3>Mitra Cirebon</h3></div></div>
+          <div class="h-card card"><div class="photo" style="background:url('sbg.jpg') center/cover no-repeat;"></div><div class="content"><h3>Mitra Subang</h3></div></div>
+          <div class="h-card card"><div class="photo" style="background:url('brb.jpg') center/cover no-repeat;"></div><div class="content"><h3>Mitra Brebes</h3></div></div>
+          <div class="h-card card"><div class="photo" style="background:url('hgl.jpg') center/cover no-repeat;"></div><div class="content"><h3>Mitra Haurgeulis</h3></div></div>
+          <div class="h-card card"><div class="photo" style="background:url('LogoTTN.png') center/cover no-repeat;"></div><div class="content"><h3>Mitra Purwakarta</h3><p>(Segera hadir)</p></div></div>
+          <div class="h-card card"><div class="photo" style="background:url('LogoTTN.png') center/cover no-repeat;"></div><div class="content"><h3>Mitra Pekalongan</h3><p>Segera hadir</p></div></div>
+        </div>
+        <div style="text-align:center;margin-top:12px;">
+          <a class="cta" href="kontak.html">Jadilah bagian dari Kami <br>Klik di sini</a>
+        </div>
+      </section>
+
+      <!-- KEGIATAN -->
+      <section id="kegiatan">
+        <h2>Kegiatan Kami</h2>
+        <div class="h-scroll">
+          <div class="h-card card"><div class="photo" style="background:url('Rapat.jpg') center/cover no-repeat;"></div><div class="content"><h3>Evaluasi Bulanan</h3><p>Mengevaluasi kinerja tim yang diadakan setiap bulan pada masing-masing cabang.</p></div></div>
+          <div class="h-card card"><div class="photo" style="background:url('Konsolidasi.jpg') center/cover no-repeat;"></div><div class="content"><h3>Konsolidasi</h3><p>Diadakan setiap 6 bulan sekali yang diikuti semua cabang.</p></div></div>
+          <div class="h-card card"><div class="photo" style="background:url('Aniv.jpg') center/cover no-repeat;"></div><div class="content"><h3>Anniversary</h3><p>Moment Anniversary TEH TARIK NUSANTARA di bukit Pamoyanan Subang.</p></div></div>
+          <div class="h-card card"><div class="photo" style="background:url('ldr.jpg') center/cover no-repeat;"></div><div class="content"><h3>Training Leader</h3><p>Pelatihan kepala cabang yang dihadiri oleh owner Teh Tarik Nusantara.</p></div></div>
+        </div>
+      </section>
+
+      <!-- SOSMED -->
+      <section id="sosmed">
+        <h2>Ikuti Kami</h2>
+        <div class="socials">
+          <a href="https://www.instagram.com/tehtarik_nusantara?igsh=OTI4ajB2YTgwY2V5" class="ig"><i class="fab fa-instagram"></i></a>
+          <a href="#" class="fb"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="tt"><i class="fab fa-tiktok"></i></a>
+        </div>
+      </section>
+
+      <!-- LOGO BESAR -->
+      <section id="logo-akhir">
+        <div style="text-align:center;margin-top:24px;">
+          <img src="LogoTTN.png" alt="Logo Teh Tarik Nusantara" style="width:160px;margin:0 auto 8px;">
+          <h3>Teh Tarik Nusantara</h3>
+          <p style="color:var(--muted);">Rasa Tiada Tara</p>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>Jl. By Pass Ujungaris No. 56, Ujingaris - Widasari<br>Teh Tarik Nusantara — Rasa Tiada Tara<br>© 2025 Teh Tarik Nusantara. All rights reserved.</p>
+    </footer>
+
+  </div> <!-- END PAGE WRAPPER -->
+
+  <!-- FLOATING MENU -->
+  <div class="fab-wrap">
+    <button class="fab menu" id="menuBtn" title="Menu"><i class="fas fa-bars"></i></button>
+  </div>
+
+  <!-- MINI MENU -->
+  <div class="mini-menu" id="miniMenu">
+    <div class="mini-item"><i class="fas fa-home"></i><a href="index.html">Beranda</a></div>
+    <div class="mini-item"><i class="fas fa-info-circle"></i><a href="about.html">Tentang</a></div>
+    <div class="mini-item"><i class="fas fa-handshake"></i><a href="mitra.html">Mitra</a></div>
+    <div class="mini-item"><i class="fas fa-envelope"></i><a href="kontak.html">Kontak</a></div>
+  </div>
+
+  <script>
+    // Scroll animation
+    const sections = document.querySelectorAll("section");
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(en => {
+        if(en.isIntersecting) en.target.classList.add("show");
+      });
+    }, { threshold: 0.15 });
+    sections.forEach(s => io.observe(s));
+
+    // Mini menu toggle
+    const menuBtn = document.getElementById("menuBtn");
+    const miniMenu = document.getElementById("miniMenu");
+    let menuOpen = false;
+    menuBtn.addEventListener("click", () => {
+      menuOpen = !menuOpen;
+      miniMenu.querySelectorAll(".mini-item").forEach((it, i) => {
+        setTimeout(() => it.classList.toggle("show", menuOpen), i * 80);
+      });
+    });
+
+    // PAGE TRANSITION ZOOM IN/OUT
+    const page = document.getElementById("page");
+    document.querySelectorAll("a").forEach(link => {
+      if(link.href && link.target !== "_blank") {
+        link.addEventListener("click", e => {
+          e.preventDefault();
+          const url = link.href;
+          page.style.transform = "scale(0.9)";
+          page.style.opacity = "0";
+          setTimeout(() => {
+            window.location = url;
+          }, 300);
+        });
+      }
+    });
+
+    // Fade in page on load
+    window.addEventListener("load", () => {
+      page.style.transform = "scale(1)";
+      page.style.opacity = "1";
+    });
+  </script>
+</body>
+</html>

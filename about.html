@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta name="theme-color" content="#f8e9d2">
+<link rel="icon" href="ikon-512.png">
+<title>About — Teh Tarik Nusantara</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+:root{
+  --cream-1:#fdf7e7;
+  --cream-2:#f8e9d2;
+  --accent:#b3874f;
+  --accent-dark:#8c6231;
+  --card-bg:#fff;
+  --text:#4b3b2a;
+  --muted:#7b6a58;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:'Fredoka',sans-serif;
+  background:linear-gradient(135deg,var(--cream-1),var(--cream-2));
+  color:var(--text);
+  line-height:1.5;
+  overflow-x:hidden;
+  -webkit-user-select:none;
+  user-select:none;
+  -webkit-tap-highlight-color:transparent;
+}
+
+img{max-width:100%;display:block;object-fit:cover}
+a{text-decoration:none;color:inherit}
+
+/* NAVBAR */
+nav{
+  position:fixed;top:0;left:0;right:0;
+  height:64px;
+  background:var(--accent-dark);
+  color:white;
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  box-shadow:0 3px 10px rgba(0,0,0,.15);
+  z-index:1000;
+}
+nav img{width:40px;height:40px;}
+nav .title{font-weight:700;font-size:1.2rem}
+
+/* PAGE */
+#page{
+  opacity:0;
+  transform:translateY(10px);
+  transition:.6s ease;
+}
+
+main{padding:80px 16px 30px;max-width:1100px;margin:auto}
+section{
+  margin-top:32px;
+  opacity:0;
+  transform:translateY(20px);
+  transition:.5s ease;
+}
+section.show{opacity:1;transform:none}
+section h2{text-align:center;color:var(--accent-dark);font-size:1.4rem;margin-bottom:14px}
+
+/* CARD */
+.card{
+  background:var(--card-bg);
+  border-radius:12px;
+  overflow:hidden;
+  box-shadow:0 4px 10px rgba(0,0,0,.06);
+  transition:.25s ease;
+  margin-bottom:16px;
+}
+.card:hover{transform:translateY(-2px);}
+.card .photo{
+  width:100%;
+  padding-top:100%;
+  background:url('foto.jpg') center/cover no-repeat;
+}
+.card .content{padding:12px 14px;}
+.card h3{color:var(--accent-dark);margin-bottom:6px}
+.card p{color:var(--muted);font-size:.9rem}
+
+.card-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:14px;
+}
+
+/* HORIZONTAL SCROLL */
+.h-scroll{display:flex;gap:12px;overflow-x:auto;padding:6px}
+.h-card{min-width:200px;flex:0 0 auto}
+
+/* FOOTER */
+footer{
+  margin:30px auto 10px;
+  background:var(--accent-dark);
+  color:white;
+  text-align:center;
+  padding:14px;
+  border-radius:10px;
+  font-size:.85rem;
+}
+
+/* END SECTION */
+.end-section{
+  margin:32px auto;
+  text-align:center;
+  opacity:0;
+  transform:translateY(20px);
+  transition:.5s ease;
+}
+.end-section.show{opacity:1;transform:none}
+.end-section .photo{
+  width:120px;height:120px;
+  margin:0 auto 12px;
+  border-radius:12px;
+  background:url('LogoTTN.png') center/cover no-repeat;
+}
+
+.btn-end{
+  display:inline-block;
+  padding:10px 18px;
+  background:var(--accent);
+  color:white;
+  border-radius:8px;
+  font-weight:700;
+  box-shadow:0 4px 10px rgba(0,0,0,.12);
+  transition:.2s;
+}
+.btn-end:hover{transform:translateY(-2px)}
+
+/* FLOATING MENU */
+.fab-wrap{position:fixed;bottom:18px;right:18px;display:flex;flex-direction:column;align-items:center;gap:10px;z-index:1100;}
+.fab{
+  width:56px;height:56px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  background:white;box-shadow:0 12px 30px rgba(66,50,34,0.12);
+  border:none;cursor:pointer;transition:.3s;
+}
+.fab:hover{transform:translateY(-3px);}
+.fab i{font-size:22px;color:var(--accent-dark);}
+
+.mini-menu{position:fixed;right:18px;bottom:86px;display:flex;flex-direction:column;gap:10px;z-index:1099;}
+.mini-item{display:flex;align-items:center;gap:8px;background:white;padding:8px 12px;border-radius:10px;box-shadow:0 8px 20px rgba(0,0,0,0.1);transform:translateX(20px);opacity:0;transition:all .4s ease;}
+.mini-item.show{transform:translateX(0);opacity:1;}
+.mini-item i{color:var(--accent-dark);}
+.mini-item a{font-weight:600;color:var(--text);text-decoration:none;}
+
+/* RESPONSIVE */
+@media(max-width:520px){
+  nav img{width:34px;height:34px}
+  .h-card{min-width:160px}
+}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+  <img src="LogoTTN.png" alt="Logo TTN">
+  <div class="title">Teh Tarik Nusantara</div>
+</nav>
+
+<!-- PAGE WRAPPER -->
+<div id="page">
+
+<main>
+  <!-- PROFIL -->
+  <section id="profil">
+    <h2>Profil</h2>
+    <div class="card">
+      <div class="photo" style="background:url('LogoTTN.png') center/cover no-repeat;"></div>
+      <div class="content">
+        <p><strong>Menghadirkan cita rasa teh tarik yang autentik dan Berkualitas Tinggi.</strong></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- VISI & MISI -->
+  <section id="visi-misi">
+    <h2>Visi & Misi</h2>
+    <div class="card">
+      <div class="content">
+        <p><strong>Visi:</strong> Menjadi pemimpin pasar minuman teh tarik di Pulau Jawa, dengan menghadirkan produk yang otentik, 
+berkualitas tinggi, dan memenuhi kebutuhan masyarakat, sehingga mencapai kesuksesan dan kepuasan 
+yang berkelanjutan.</p>
+        <p><strong>Misi:</strong> <br>1.
+Mengembangkan produk teh tarik yang unik dan berkualitas tinggi: Kami berkomitmen untuk 
+mengembangkan produk teh tarik yang memiliki rasa yang unik dan berkualitas tinggi, sehingga 
+dapat memenuhi kebutuhan masyarakat.<br>
+2.
+Membangun jaringan distribusi yang luas dan efektif: Kami berkomitmen untuk membangun 
+jaringan distribusi yang luas dan efektif, sehingga produk kami dapat tersedia di seluruh Pulau Jawa. <br>
+3.
+Meningkatkan kesadaran dan kepercayaan masyarakat terhadap produk kami: Kami 
+berkomitmen untuk meningkatkan kesadaran dan kepercayaan masyarakat terhadap produk kami, 
+sehingga dapat meningkatkan loyalitas dan kepuasan pelanggan. <br>
+4.
+Mengembangkan tim yang profesional dan berdedikasi: Kami berkomitmen untuk 
+mengembangkan tim yang profesional dan berdedikasi, sehingga dapat meningkatkan kualitas 
+produk dan layanan kami. <br>
+5.
+Meningkatkan kualitas hidup masyarakat melalui program-program sosial: Kami 
+berkomitmen untuk meningkatkan kualitas hidup masyarakat melalui program-program sosial, 
+sehingga dapat meningkatkan kesadaran dan kepercayaan masyarakat terhadap produk kami.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SEJARAH -->
+  <section id="sejarah">
+    <h2>Sejarah Singkat</h2>
+    <div class="card">
+      <div class="photo" style="background:url('Pelatihan.jpg') center/cover no-repeat;"></div>
+      <div class="content">
+        <p>Sejak tahun 2020, kami memulai usaha Teh Tarik Nusantara dengan semangat dan dedikasi untuk membagikan cita rasa teh tarik yang autentik dan khas Nusantara kepada masyarakat luas. Pendiri kami, Fajrul Iman, S.Pd., memiliki visi untuk menghadirkan produk teh tarik yang berkualitas tinggi, memadukan cita rasa tradisional dengan sentuhan modern yang disukai semua kalangan.<br>
+        <br>
+
+Terinspirasi dari kekayaan budaya dan rasa khas Nusantara, setiap racikan Teh Tarik Nusantara dibuat dengan teliti, menggunakan bahan pilihan terbaik untuk menjaga keaslian dan kualitas di setiap sajian.<br>
+<br>
+
+Pada tahun 2022, kami secara resmi membentuk legalitas usaha dan memperkuat struktur organisasi sebagai langkah untuk meningkatkan mutu produk serta memperluas jangkauan pelayanan. Sejak awal berdirinya, Teh Tarik Nusantara berkomitmen menjadi simbol kebanggaan lokal — menghadirkan kesegaran, kenikmatan, dan kehangatan di setiap tegukan.
+</p>
+      </div>
+    </div>
+  </section>
+  
+  <!-- TIM KAMI -->
+<section id="tim">
+  <h2>Tim Kami</h2>
+  <div class="h-scroll">
+    <div class="h-card card">
+      <div class="photo" style="background:url('Tim2.jpg') center/cover no-repeat;"></div>
+      <div class="content"><p>Divisi Produksi</p></div>
+    </div>
+    <div class="h-card card">
+      <div class="photo" style="background:url('Tim3.jpg') center/cover no-repeat;"></div>
+      <div class="content"><p>Divisi Administrasi</p></div>
+    </div>
+    <div class="h-card card">
+      <div class="photo" style="background:url('Tim1.jpg') center/cover no-repeat;"></div>
+      <div class="content"><p>Divisi Kurir</p></div>
+    </div>
+    <div class="h-card card">
+      <div class="photo" style="background:url('mul.jpg') center/cover no-repeat;"></div>
+      <div class="content"><p>Divisi Multimedia</p></div>
+    </div>
+  </div>
+</section>
+
+  <!-- PASAR KAMI -->
+  <section id="pasar">
+    <h2>Pasar Kami</h2>
+    <div class="card">
+      <div class="photo" style="background:url('pasar.jpg') center/cover no-repeat;"></div>
+      <div class="content">
+        <p>Produk kami telah tersedia secara luas di toko-toko, baik di wilayah perkotaan maupun pedesaan.</p>
+      </div>
+    </div>
+  </section>
+
+
+  </section>
+
+  <!-- AKHIR HALAMAN: LOGO + TOMBOL LANJUT -->
+  <div class="end-section">
+    <div class="photo"></div>
+    <a class="btn-end" href="mitra.html">Lanjut Keppoin</a>
+  </div>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <p>Jl. By Pass Ujungaris No. 56, Ujingaris - Widasari<br>Teh Tarik Nusantara — Rasa Tiada Tara<br>© 2026 Teh Tarik Nusantara. All rights reserved.</p>
+</footer>
+</div> <!-- END PAGE WRAPPER -->
+
+<!-- FLOATING MINI MENU -->
+<div class="fab-wrap">
+  <button class="fab" id="menuBtn" title="Menu"><i class="fas fa-bars"></i></button>
+</div>
+<div class="mini-menu" id="miniMenu">
+  <div class="mini-item"><i class="fas fa-home"></i><a href="index.html">Beranda</a></div>
+  <div class="mini-item"><i class="fas fa-info-circle"></i><a href="about.html">Tentang</a></div>
+  <div class="mini-item"><i class="fas fa-handshake"></i><a href="mitra.html">Mitra</a></div>
+  <div class="mini-item"><i class="fas fa-envelope"></i><a href="kontak.html">Kontak</a></div>
+</div>
+
+<script>
+// Fade-in sections and end-section
+const sections = document.querySelectorAll("section, .end-section");
+const io = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting) entry.target.classList.add("show");
+  });
+}, {threshold: 0.15});
+sections.forEach(s => io.observe(s));
+
+// Mini menu toggle
+const menuBtn = document.getElementById("menuBtn");
+const miniMenu = document.getElementById("miniMenu");
+let menuOpen = false;
+menuBtn.addEventListener("click", () => {
+  menuOpen = !menuOpen;
+  miniMenu.querySelectorAll(".mini-item").forEach((it,i) => {
+    setTimeout(() => it.classList.toggle("show", menuOpen), i*80);
+  });
+});
+
+// PAGE TRANSITION ON LOAD
+const page = document.getElementById("page");
+window.addEventListener("load", () => {
+  page.style.transform = "scale(1)";
+  page.style.opacity = "1";
+});
+
+// OPTIONAL: TRANSITION ON LINK NAVIGATION
+document.querySelectorAll('a').forEach(link => {
+  if(link.getAttribute('href') && !link.getAttribute('href').startsWith('#')){
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      const href = link.getAttribute('href');
+      page.style.transform = "scale(0.9)";
+      page.style.opacity = "0";
+      setTimeout(() => window.location.href = href, 300);
+    });
+  }
+});
+</script>
+</body>
+</html>
